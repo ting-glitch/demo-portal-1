@@ -1,13 +1,13 @@
 # Enterprise Logistics & RMA Management System
 ### *Customized Automation Workflow Demo*
 
-[![GitHub Pages](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge&logo=github)](https://ting-glitch.github.io/ops-platform-demo/)
+[![GitHub Pages](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge&logo=github)](https://ting-glitch.github.io/demo-portal-1/)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-05998b?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
 A high-performance, enterprise-grade management dashboard designed to automate complex logistics workflows and **Return Merchandise Authorization (RMA)** processes. This platform bridges the gap between unstructured email communications and structured data management by integrating **FastAPI**, **Microsoft Outlook COM Interfaces**, and **OpenPyXL**.
 
-> **Live Portfolio Demo:** [Experience the Interactive Interface](https://ting-glitch.github.io/ops-platform-demo/) (Simulated environment optimized for static hosting).
+> **Live Portfolio Demo:** [Experience the Interactive Interface](https://ting-glitch.github.io/demo-portal-1/) (Simulated environment optimized for static hosting).
 
 ---
 
@@ -62,8 +62,8 @@ A high-performance, enterprise-grade management dashboard designed to automate c
 ### ⚡ Local Setup
 1. **Initialize the Environment**:
    ```bash
-   git clone https://github.com/ting-glitch/ops-platform-demo.git
-   cd ops-platform-demo
+   git clone https://github.com/ting-glitch/demo-portal-1.git
+   cd demo-portal-1
    ```
 2. **Launch the Platform**:
    ```bash
