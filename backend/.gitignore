@@ -1,0 +1,17 @@
+# Backend sensitive data and environment
+.env
+.env.local
+.venv
+venv/
+ENV/
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database and logs
+data.json
+*.log
+downloads/

@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Platform</title>
+    <!-- Inter Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --bg-gradient: #f8fafc;
+            --panel-bg: #ffffff;
+            --panel-border: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-glow: rgba(59, 130, 246, 0.2);
+            --success-color: #10b981;
+            --success-bg: #d1fae5;
+            --success-border: #34d399;
+            --danger-color: #ef4444;
+            --danger-bg: #fee2e2;
+            --danger-border: #f87171;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Panel Styles */
+        .glass-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Header Style */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-logo {
+            background: var(--accent-primary);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .brand-logo svg {
+            width: 26px;
+            height: 26px;
+            fill: white;
+            flex-shrink: 0;
+        }
+
+        .brand-info h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .brand-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Button design */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid transparent;
+        }
+
+        svg {
+            flex-shrink: 0;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-secondary.badge-action {
+            padding: 0.25rem 0.6rem;
+            font-size: 0.75rem;
+            min-height: 1.75rem;
+            line-height: 1.2;
+        }
+
+        /* Cohesive Minimalist Download Button */
+        .btn-download {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            color: var(--text-primary) !important;
+            font-weight: 500;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.75rem;
+            min-height: 1.75rem;
+            line-height: 1.2;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .btn-download:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+            transform: translateY(-0.5px);
+        }
+
+        .btn-download:active {
+            transform: translateY(0);
+        }
+
+        .btn-download svg {
+            transition: transform 0.2s ease;
+            color: var(--text-secondary);
+        }
+
+        .btn-download:hover svg {
+            transform: translateY(0.5px);
+            color: var(--text-primary);
+        }
+
+        .btn-icon {
+            padding: 0.65rem;
+            border-radius: 8px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon:hover {
+            background: #e2e8f0;
+            color: var(--accent-primary);
+        }
+
+        /* Data Panel & Table Styles */
+        .data-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .data-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .data-title-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .data-title h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .data-badge {
+            background: #e0e7ff;
+            color: #4338ca;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--panel-border);
+            background: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background: #f8fafc;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--panel-border);
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 12px;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            vertical-align: middle;
+            transition: background-color 0.15s ease;
+        }
+
+        tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 12px;
+        }
+
+        tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 12px;
+        }
+
+        tbody tr:hover td {
+            background: rgba(248, 250, 252, 0.7);
+        }
+
+        /* Row Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .badge-success {
+            background: var(--success-bg);
+            color: #047857;
+            border: 1px solid var(--success-border);
+        }
+
+        .badge-danger {
+            background: var(--danger-bg);
+            color: #b91c1c;
+            border: 1px solid var(--danger-border);
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1d4ed8;
+            border: 1px solid #93c5fd;
+        }
+
+        .badge-secondary {
+            background: #f1f5f9;
+            color: var(--text-secondary);
+            border: 1px solid #cbd5e1;
+        }
+
+        /* Form Inputs in Table */
+        .editable-cell {
+            position: relative;
+            cursor: pointer;
+            min-width: 80px;
+            transition: all 0.15s ease;
+            border-radius: 6px;
+            padding: 0.35rem 0.6rem;
+            border: 1px dashed transparent;
+        }
+
+        .editable-cell:hover {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #1e40af;
+        }
+
+        .edit-input {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid var(--accent-primary);
+            color: var(--text-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: inherit;
+            outline: none;
+        }
+
+        /* Stepper Style (Phase Progress) */
+        .stepper-container {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .step-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+            background: #f1f5f9;
+            color: var(--text-secondary);
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s ease;
+        }
+
+        .step-dot.active {
+            background: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .step-dot.pending {
+            background: #eff6ff;
+            color: var(--accent-primary);
+            border-color: #bfdbfe;
+        }
+
+        .step-dot.current {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+            animation: pulse-step 2s infinite;
+        }
+
+        @keyframes pulse-step {
+            0% { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0.45); }
+            70% { box-shadow: 0 0 0 5px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0); }
+        }
+
+        .step-line {
+            flex-grow: 1;
+            height: 2px;
+            background: #cbd5e1;
+            min-width: 10px;
+        }
+
+        .step-line.active {
+            background: var(--success-color);
+        }
+
+        /* Action Buttons Group */
+        .action-cell-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .phase-status-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            align-items: flex-start;
+        }
+
+        .action-cell-btn-group {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            min-height: 1.85rem;
+            line-height: 1.2;
+        }
+
+        .btn-action:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-action:active:not(:disabled) {
+            transform: scale(0.96);
+        }
+
+        .btn-action-save {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .btn-action-save:hover:not(:disabled) {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #34d399;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+        }
+
+        .btn-action-forward {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .btn-action-forward:hover:not(:disabled) {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-color: #60a5fa;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .btn-action-ship {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            color: #5b21b6;
+            border: 1px solid #ddd6fe;
+        }
+
+        .btn-action-ship:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-color: #a78bfa;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+        }
+
+        .btn-action-redo {
+            background: #ffffff;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-action-redo:hover:not(:disabled) {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #1e293b;
+        }
+
+        .btn-action:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            filter: grayscale(0.8);
+            box-shadow: none;
+        }
+
+        /* Hover Redo State toggles */
+        .btn-action .btn-state-hover {
+            display: none;
+        }
+
+        .btn-action:hover .btn-state-normal {
+            display: none;
+        }
+
+        .btn-action:hover .btn-state-hover {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Settings Modal styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: #ffffff;
+            border: 1px solid var(--panel-border);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-overlay.open .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .form-input {
+            flex-grow: 1;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: var(--text-primary);
+            padding: 0.6rem 0.75rem;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Toasts Notification */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 200;
+        }
+
+        .toast {
+            background: #ffffff;
+            border: 1px solid var(--panel-border);
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: toastIn 0.3s forwards;
+            min-width: 300px;
+        }
+
+        .toast-success { border-left: 4px solid var(--success-color); }
+        .toast-error { border-left: 4px solid var(--danger-color); }
+        .toast-icon { font-size: 1.25rem; }
+        .toast-content h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.1rem; }
+        .toast-content p { font-size: 0.75rem; color: var(--text-secondary); }
+
+        @keyframes toastIn { to { transform: translateY(0); opacity: 1; } }
+        .toast-fade-out { animation: toastOut 0.3s forwards; }
+        @keyframes toastOut { to { transform: translateY(-20px); opacity: 0; } }
+
+        .spinner {
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 2px solid currentColor;
+            width: 14px;
+            height: 14px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .preview-subject-box {
+            font-size: 0.65rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            max-width: 175px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: help;
+        }
+
+        .meta-container {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 0.35rem;
+        }
+
+        .attach-badge {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .attach-badge-has {
+            background: rgba(59, 130, 246, 0.08);
+            color: #1d4ed8;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .attach-badge-has:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+
+        .attach-badge-none {
+            background: rgba(100, 116, 139, 0.05);
+            color: #64748b;
+            border: 1px solid rgba(100, 116, 139, 0.15);
+            opacity: 0.85;
+        }
+
+        /* ====================================================
+           RESPONSIVE DESIGN (MOBILE FRIENDLY)
+           ==================================================== */
+        @media (max-width: 1024px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+            header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1.25rem;
+                padding: 1.25rem 1.5rem;
+            }
+            .header-actions {
+                justify-content: flex-end;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                gap: 1.25rem;
+            }
+            .glass-panel {
+                padding: 1.25rem;
+            }
+            header {
+                padding: 1rem 1.25rem;
+            }
+            .brand-section {
+                gap: 0.75rem;
+            }
+            .brand-logo {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+            }
+            .brand-logo svg {
+                width: 22px;
+                height: 22px;
+            }
+            .brand-info h1 {
+                font-size: 1.25rem;
+            }
+            .header-actions {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+            .header-actions .btn {
+                flex-grow: 1;
+                justify-content: center;
+            }
+            .data-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            .data-title {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            .data-title-actions {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .data-title-actions .btn,
+            .data-title-actions .btn-download {
+                flex-grow: 1;
+                justify-content: center;
+                margin-left: 0 !important;
+            }
+            .toast-container {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+            }
+            .toast {
+                min-width: 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.75rem 0.25rem;
+            }
+            .glass-panel {
+                padding: 1rem 0.75rem;
+                border-radius: 8px;
+            }
+            header {
+                border-radius: 8px;
+            }
+            .header-actions .btn {
+                font-size: 0.85rem;
+                padding: 0.55rem 1rem;
+            }
+            .modal-container {
+                padding: 1.25rem;
+                width: 95%;
+            }
+            .form-input-wrapper {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .form-input-wrapper .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .modal-footer {
+                flex-direction: column-reverse;
+                gap: 0.5rem;
+                margin-top: 1.5rem;
+            }
+            .modal-footer .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="glass-panel">
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <h1>Custom Operations Platform via Agentic IDEs</h1>
+                    <p style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.25rem; max-width: 850px; line-height: 1.35; font-weight: 500;">
+                        ⚠️ <strong>Demonstration Disclaimer:</strong> This platform simulates logistics automation workflows. Clicking action buttons (Save, RPA, Ship) in this live portfolio environment generates simulated, offline email compositions and will not execute live changes or alter your actual Outlook client.
+                    </p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="btn-scan" style="white-space: nowrap;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18"/>
+                    </svg>
+                    Scan Outlook Inbox
+                </button>
+                <button class="btn-icon" id="btn-settings" title="Configuration Settings">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- VISUAL DATA MANAGEMENT PANEL -->
+        <main class="glass-panel">
+            <div class="data-header">
+                <div class="data-title">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <h2>Active Case Update</h2>
+                        <span class="data-badge" id="data-count">0 records</span>
+                    </div>
+                    <div class="data-title-actions">
+                        <button class="btn btn-secondary badge-action" id="btn-toggle-history" style="white-space: nowrap;">Show History</button>
+                        <button class="btn btn-secondary badge-action" id="btn-reset-data" style="white-space: nowrap;">Reset</button>
+                        <button class="btn-download" id="btn-export-excel" title="Export Relational Excel Report">
+                            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75v6.7m0 0l-3-3m3 3l3-3m-9.75 4.85h13.5A5.25 5.25 0 0018 7.5a4.5 4.5 0 00-8.706-1.542 3 3 0 00-6.194 1.932 4 4 0 00.323 7.828z" />
+                            </svg>
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="min-width: 180px;">Perform Actions</th>
+                            <th>Files</th>
+                            <th>Phase Status</th>
+                            <th>Center</th>
+                            <th>Batch</th>
+                            <th>Type</th>
+                            <th>Ship-out Date</th>
+                            <th>Creation Date</th>
+                            <th>Tracking No</th>
+                            <th>RMA No</th>
+                            <th>Qty (PCS)</th>
+                            <th>Return to</th>
+                            <th>Phase 1 Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records-body">
+                        <tr>
+                            <td colspan="13" style="text-align: center; color: var(--text-secondary); padding: 3rem;">
+                                點擊「掃描 Outlook 收件匣」按鈕，載入並解析信件數據。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- CONFIGURATION SETTINGS MODAL -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Attachment Storage Path Settings</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Default Attachment Download Path</label>
+                <div class="form-input-wrapper">
+                    <input type="text" class="form-input" id="cfg-download-dir" placeholder="Please select a folder..." readonly>
+                    <button class="btn btn-secondary" id="btn-browse-folder" type="button">Browse...</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btn-modal-cancel">Cancel</button>
+                <button class="btn btn-primary" id="btn-modal-save">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOASTS CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        // DOM Elements
+        const btnScan = document.getElementById('btn-scan');
+        const btnSettings = document.getElementById('btn-settings');
+        const modalOverlay = document.getElementById('settings-modal');
+        const modalClose = document.getElementById('modal-close');
+        const btnModalCancel = document.getElementById('btn-modal-cancel');
+        const btnModalSave = document.getElementById('btn-modal-save');
+        const cfgDownloadDir = document.getElementById('cfg-download-dir');
+        const btnBrowseFolder = document.getElementById('btn-browse-folder');
+        const recordsBody = document.getElementById('records-body');
+        const toastContainer = document.getElementById('toast-container');
+        const dataCount = document.getElementById('data-count');
+        const btnResetData = document.getElementById('btn-reset-data');
+        const btnExportExcel = document.getElementById('btn-export-excel');
+        const btnToggleHistory = document.getElementById('btn-toggle-history');
+
+        let records = [];
+        let config = { download_dir: '' };
+        let showHistory = false;
+
+        async function fetchConfig() {
+            try {
+                const res = await fetch('/api/config');
+                if (res.ok) {
+                    config = await res.json();
+                    cfgDownloadDir.value = config.download_dir;
+                }
+            } catch (err) {
+                showToast('Failed to load settings', err.message, 'error');
+            }
+        }
+
+        async function fetchRecords() {
+            try {
+                const res = await fetch('/api/records');
+                if (res.ok) {
+                    records = await res.json();
+                    renderRecords();
+                }
+            } catch (err) {
+                showToast('載入資料失敗', err.message, 'error');
+            }
+        }
+
+        function isRecent(shipOutDateStr) {
+            if (!shipOutDateStr) return false;
+            const parts = shipOutDateStr.split('/');
+            if (parts.length < 2) return false;
+            
+            let yearStr = parts[0];
+            let year;
+            if (yearStr === "202X") {
+                year = new Date().getFullYear();
+            } else {
+                year = parseInt(yearStr, 10);
+                if (isNaN(year)) return false;
+                if (year < 100) year += 2000;
+            }
+            
+            const month = parseInt(parts[1], 10);
+            if (isNaN(month)) return false;
+            
+            const today = new Date();
+            const curYear = today.getFullYear();
+            const curMonth = today.getMonth() + 1;
+            
+            const targetMonths = [];
+            targetMonths.push({ y: curYear, m: curMonth });
+            
+            let prevYear = curYear;
+            let prevMonth = curMonth - 1;
+            if (prevMonth === 0) {
+                prevMonth = 12;
+                prevYear -= 1;
+            }
+            targetMonths.push({ y: prevYear, m: prevMonth });
+            
+            return targetMonths.some(t => t.y === year && t.m === month);
+        }
+
+        function renderRecords() {
+            records.sort((a, b) => {
+                const dateA = a.ship_out_date || '';
+                const dateB = b.ship_out_date || '';
+                if (dateA !== dateB) {
+                    return dateB.localeCompare(dateA);
+                }
+                const timeA = a.received_time || '';
+                const timeB = b.received_time || '';
+                return timeB.localeCompare(timeA);
+            });
+
+            const recentRecords = [];
+            records.forEach(r => {
+                if (isRecent(r.ship_out_date)) {
+                    recentRecords.push(r);
+                }
+            });
+
+            const recordsToRender = showHistory ? records : recentRecords;
+
+            if (recordsToRender.length === 0) {
+                recordsBody.innerHTML = `
+                    <tr>
+                        <td colspan="13" style="text-align: center; color: var(--text-secondary); padding: 3rem;">
+                            ${showHistory ? '目前無符合的郵件，請點擊「掃描 Outlook 收件匣」按鈕。' : '近兩個月無符合的郵件，可點擊「顯示歷史資料」查看歷史紀錄。'}
+                        </td>
+                    </tr>
+                `;
+                dataCount.innerText = showHistory ? '0 records' : '0 recent records';
+                return;
+            }
+
+            recordsBody.innerHTML = '';
+            recordsToRender.forEach(r => {
+                const tr = document.createElement('tr');
+                const typeBadge = r.type === 'OK' ? `<span class="badge badge-success">OK</span>` : `<span class="badge badge-danger">BAD</span>`;
+                
+                let statusBadge = `<span class="badge badge-secondary">New</span>`;
+                if (r.status === 'Shipped') {
+                    statusBadge = `<span class="badge badge-success">Shipped</span>`;
+                } else if (r.status === 'RPA Submitted') {
+                    statusBadge = `<span class="badge badge-success">RPA Submitted</span>`;
+                } else if (r.status === 'Phase 2 Ready') {
+                    statusBadge = `<span class="badge badge-info">Phase 2 Ready</span>`;
+                } else if (r.status === 'Processing') {
+                    statusBadge = `<span class="badge badge-info">Processing</span>`;
+                }
+
+                const batchValue = r.batch || '--';
+                const phase1Active = r.phases.phase1.completed ? 'active' : (r.phases.phase1.attachment_saved || r.phases.phase1.forward_prepared ? 'pending' : 'current');
+                const phase2Active = r.phases.phase2.completed ? 'active' : (r.phases.phase2.available ? 'current' : 'pending');
+                const phase3Active = r.phases.phase3.completed ? 'active' : 'pending';
+
+                const hasPhase3 = r.type === 'BAD';
+                
+                const stepperHTML = `
+                    <div class="phase-status-container">
+                        <div>${statusBadge}</div>
+                        <div class="stepper-container">
+                            <div class="step-dot ${phase1Active}" title="Phase 1: ${r.phases.phase1.completed ? 'Done' : 'Processing'}">1</div>
+                            <div class="step-line ${r.phases.phase1.completed ? 'active' : ''}"></div>
+                            <div class="step-dot ${phase2Active}" title="Phase 2: ${r.phases.phase2.completed ? 'Done' : (r.phases.phase2.available ? 'Ready' : 'Pending')}">2</div>
+                            ${hasPhase3 ? `<div class="step-line ${r.phases.phase2.completed ? 'active' : ''}"></div>
+                            <div class="step-dot ${phase3Active}" title="Phase 3: Pending">3</div>` : ''}
+                        </div>
+                    </div>
+                `;
+
+                let saveButtonHTML = '';
+                if (r.phases.phase1.attachment_saved) {
+                    saveButtonHTML = `
+                        <button class="btn-action btn-action-redo" onclick="saveAttachments(this, '${r.id}')">
+                            <span class="btn-state-normal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color: #10b981;"><polyline points="20 6 9 17 4 12"/></svg> Done</span>
+                            <span class="btn-state-hover"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Redo Save</span>
+                        </button>
+                    `;
+                } else {
+                    saveButtonHTML = `
+                        <button class="btn-action btn-action-save" onclick="saveAttachments(this, '${r.id}')">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Save
+                        </button>
+                    `;
+                }
+
+                let forwardButtonHTML = '';
+                if (r.phases.phase1.forward_prepared) {
+                    forwardButtonHTML = `
+                        <button class="btn-action btn-action-redo" onclick="prepareForward(this, '${r.id}')">
+                            <span class="btn-state-normal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color: #10b981;"><polyline points="20 6 9 17 4 12"/></svg> Done</span>
+                            <span class="btn-state-hover"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Redo RPA</span>
+                        </button>
+                    `;
+                } else {
+                    forwardButtonHTML = `
+                        <button class="btn-action btn-action-forward" onclick="prepareForward(this, '${r.id}')">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> RPA
+                        </button>
+                    `;
+                }
+
+                const showShip = r.phases.phase2.available || r.phases.phase2.shipped;
+                let shipButtonHTML = '';
+                if (showShip) {
+                    if (r.phases.phase2.shipped) {
+                        shipButtonHTML = `
+                            <button class="btn-action btn-action-redo" onclick="ship(this, '${r.id}')">
+                                <span class="btn-state-normal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color: #10b981;"><polyline points="20 6 9 17 4 12"/></svg> Done</span>
+                                <span class="btn-state-hover"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Redo Ship</span>
+                            </button>
+                        `;
+                    } else {
+                        const shipDisabled = r.phases.phase2.available ? '' : 'disabled';
+                        shipButtonHTML = `
+                            <button class="btn-action btn-action-ship" onclick="ship(this, '${r.id}')" ${shipDisabled}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Ship
+                            </button>
+                        `;
+                    }
+                }
+
+                const skip_extensions = ['.png', '.jpg', '.jpeg', '.gif'];
+                const validAttachments = r.attachments.filter(file => {
+                    const ext = file.substring(file.lastIndexOf('.')).toLowerCase();
+                    return !skip_extensions.includes(ext);
+                });
+                const attachCount = validAttachments.length;
+                const attachInfo = attachCount > 0 
+                    ? `<span class="attach-badge attach-badge-has" title="附件列表: ${validAttachments.join(', ')}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg> ${attachCount} 個檔案</span>` 
+                    : `<span style="color: var(--text-secondary); opacity: 0.5;">—</span>`;
+                
+                const returnToVal = r.return_to || (r.type === 'OK' ? 'Hub-G' : 'Hub-P');
+                
+                let rmaNoHTML = '--';
+                if (r.rma_no) {
+                    const rmaArray = r.rma_no.split(',').map(x => x.trim()).filter(x => x);
+                    if (rmaArray.length > 0) {
+                        rmaNoHTML = rmaArray.map(rma => `
+                            <span class="badge" style="
+                                display: inline-block; 
+                                margin: 0.15rem 0.2rem; 
+                                background: #eff6ff; 
+                                color: #1e40af; 
+                                border: 1px solid #bfdbfe; 
+                                font-size: 0.75rem; 
+                                border-radius: 6px; 
+                                padding: 0.15rem 0.45rem; 
+                                font-weight: 600;
+                                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                            ">${rma}</span>
+                        `).join('');
+                    }
+                }
+
+                const rmaNoCell = r.type === 'OK' 
+                    ? `<td style="opacity: 0.5; cursor: not-allowed;"><div class="editable-cell" data-id="${r.id}" data-field="rma_no" style="pointer-events: none;">${r.rma_no || '--'}</div></td>`
+                    : `<td><div class="editable-cell" data-id="${r.id}" data-field="rma_no" style="display: flex; flex-wrap: wrap; align-items: center; min-height: 2.2rem; min-width: 120px;">${rmaNoHTML}</div></td>`;
+
+                tr.innerHTML = `
+                    <td>
+                        <div class="action-cell-container">
+                            <div class="action-cell-btn-group">
+                                ${saveButtonHTML}
+                                ${forwardButtonHTML}
+                                ${shipButtonHTML}
+                            </div>
+                        </div>
+                    </td>
+                    <td>${attachInfo}</td>
+                    <td>${stepperHTML}</td>
+                    <td style="font-weight: 600;">${r.center}</td>
+                    <td>${batchValue}</td>
+                    <td>${typeBadge}</td>
+                    <td>${r.ship_out_date}</td>
+                    <td><div class="editable-cell" data-id="${r.id}" data-field="creation_date">${r.creation_date || '--'}</div></td>
+                    <td><div class="editable-cell" data-id="${r.id}" data-field="er">${r.er || '--'}</div></td>
+                    ${rmaNoCell}
+                    <td style="font-weight: 500;">${r.qty}</td>
+                    <td><div class="editable-cell" data-id="${r.id}" data-field="return_to">${returnToVal}</div></td>
+                    <td><div class="editable-cell" data-id="${r.id}" data-field="phase1_completed_time" style="font-size:0.8rem; color:var(--text-secondary);">${r.phases.phase1.completed_time || '--'}</div></td>
+                `;
+                
+                recordsBody.appendChild(tr);
+            });
+
+            setupCellEditing();
+            dataCount.innerText = `${recordsToRender.length} records`;
+        }
+
+        function setupCellEditing() {
+            const cells = document.querySelectorAll('.editable-cell');
+            cells.forEach(cell => {
+                cell.addEventListener('dblclick', function() {
+                    const id = this.getAttribute('data-id');
+                    const field = this.getAttribute('data-field');
+                    
+                    const rec = records.find(r => r.id === id);
+                    const originalText = (rec && rec[field]) ? rec[field] : (this.innerText === '--' ? '' : this.innerText);
+                    
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = originalText;
+                    input.className = 'edit-input';
+                    
+                    this.innerHTML = '';
+                    this.appendChild(input);
+                    input.focus();
+                    const saveEdit = async () => {
+                        const newValue = input.value.trim();
+                        this.innerHTML = newValue === '' ? '--' : newValue;
+                        
+                        try {
+                            const res = await fetch(`/api/records/${id}`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ [field]: newValue })
+                            });
+                            
+                            if (res.ok) {
+                                const updatedRecord = await res.json();
+                                const index = records.findIndex(r => r.id === id);
+                                if (index !== -1) records[index] = updatedRecord;
+                                showToast('已儲存', `欄位已成功更新`, 'success');
+                                renderRecords();
+                            } else {
+                                throw new Error('Server error');
+                            }
+                        } catch (err) {
+                            showToast('儲存失敗', err.message, 'error');
+                            renderRecords();
+                        }
+                    };
+                    
+                    input.addEventListener('blur', saveEdit);
+                    input.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') input.blur();
+                        else if (e.key === 'Escape') {
+                            input.removeEventListener('blur', saveEdit);
+                            renderRecords();
+                        }
+                    });
+                });
+            });
+        }
+
+        btnScan.addEventListener('click', async () => {
+            btnScan.disabled = true;
+            btnScan.innerHTML = `<span class="spinner"></span> Scanning...`;
+            try {
+                const res = await fetch('/api/records/scan', { method: 'POST' });
+                if (res.ok) {
+                    records = await res.json();
+                    renderRecords();
+                    showToast('掃描完成', `已成功載入 ${records.length} 筆紀錄`, 'success');
+                } else {
+                    const errDetail = await res.json();
+                    throw new Error(errDetail.detail || 'Unknown error');
+                }
+            } catch (err) {
+                showToast('掃描失敗', err.message, 'error');
+            } finally {
+                btnScan.disabled = false;
+                btnScan.innerHTML = `
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18"/>
+                    </svg>
+                    Scan Outlook Inbox
+                `;
+            }
+        });
+
+        if (btnResetData) {
+            btnResetData.addEventListener('click', async () => {
+                if (confirm("確定要重置表格內容嗎？此操作將回復至 Demo 初始的 11 筆測試紀錄。")) {
+                    try {
+                        const res = await fetch('/api/records', { method: 'DELETE' });
+                        if (res.ok) {
+                            await fetchRecords();
+                            showToast('重置完成', '已重置為 Demo 初始測試紀錄', 'success');
+                        } else {
+                            throw new Error('伺服器錯誤');
+                        }
+                    } catch (err) {
+                        showToast('重置失敗', err.message, 'error');
+                    }
+                }
+            });
+        }
+
+        if (btnExportExcel) {
+            btnExportExcel.addEventListener('click', () => {
+                window.open('/api/export_excel', '_blank');
+            });
+        }
+
+        if (btnToggleHistory) {
+            btnToggleHistory.addEventListener('click', () => {
+                showHistory = !showHistory;
+                btnToggleHistory.innerText = showHistory ? 'Hide History' : 'Show History';
+                renderRecords();
+            });
+        }
+
+        async function saveAttachments(btn, id) {
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner"></span>`;
+
+            try {
+                const res = await fetch(`/api/records/${id}/save_attachments`, { method: 'POST' });
+                if (res.ok) {
+                    const updated = await res.json();
+                    const idx = records.findIndex(r => r.id === id);
+                    if (idx !== -1) { records[idx] = updated; renderRecords(); }
+                    showToast('附件已儲存', `檔案已成功下載`, 'success');
+                } else {
+                    const errDetail = await res.json();
+                    throw new Error(errDetail.detail || 'Failed to save');
+                }
+            } catch (err) {
+                showToast('錯誤', err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        }
+
+        async function prepareForward(btn, id) {
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner"></span>`;
+
+            try {
+                const res = await fetch(`/api/records/${id}/prepare_forward`, { method: 'POST' });
+                if (res.ok) {
+                    const updated = await res.json();
+                    const idx = records.findIndex(r => r.id === id);
+                    if (idx !== -1) { records[idx] = updated; renderRecords(); }
+                    showToast('草稿已建立', `已開啟Outlook視窗供審查`, 'success');
+                } else {
+                    const errDetail = await res.json();
+                    throw new Error(errDetail.detail || 'Failed to prepare');
+                }
+            } catch (err) {
+                showToast('錯誤', err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        }
+
+        async function ship(btn, id) {
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner"></span>`;
+
+            try {
+                const res = await fetch(`/api/records/${id}/ship`, { method: 'POST' });
+                if (res.ok) {
+                    const updated = await res.json();
+                    const idx = records.findIndex(r => r.id === id);
+                    if (idx !== -1) { records[idx] = updated; renderRecords(); }
+                    showToast('出貨文件已建立', '已成功建立出貨郵件並更新狀態', 'success');
+                } else {
+                    const errDetail = await res.json();
+                    throw new Error(errDetail.detail || 'Failed to ship');
+                }
+            } catch (err) {
+                showToast('錯誤', err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        }
+
+        function showToast(title, desc, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<div class="toast-content"><h4>${title}</h4><p>${desc}</p></div>`;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('toast-fade-out');
+                toast.addEventListener('animationend', () => toast.remove());
+            }, 5000);
+        }
+
+        btnSettings.addEventListener('click', () => modalOverlay.classList.add('open'));
+        const closeModal = () => { modalOverlay.classList.remove('open'); cfgDownloadDir.value = config.download_dir; };
+        modalClose.addEventListener('click', closeModal);
+        btnModalCancel.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+        btnBrowseFolder.addEventListener('click', async () => {
+            try {
+                const res = await fetch('/api/select_folder');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.folder_path) {
+                        cfgDownloadDir.value = data.folder_path;
+                    }
+                }
+            } catch (err) {
+                showToast('Error', 'Failed to open folder dialog', 'error');
+            }
+        });
+
+        btnModalSave.addEventListener('click', async () => {
+            const path = cfgDownloadDir.value.trim();
+            if (!path) return showToast('Error', 'Path cannot be empty', 'error');
+            btnModalSave.disabled = true;
+            btnModalSave.innerHTML = `<span class="spinner"></span>`;
+            try {
+                const res = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ download_dir: path })
+                });
+                if (res.ok) {
+                    config = await res.json();
+                    cfgDownloadDir.value = config.download_dir;
+                    showToast('Saved', 'Settings updated successfully', 'success');
+                    modalOverlay.classList.remove('open');
+                }
+            } catch (err) {
+                showToast('Error', err.message, 'error');
+            } finally {
+                btnModalSave.disabled = false;
+                btnModalSave.innerText = 'Save Settings';
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            await fetchConfig();
+            await fetchRecords();
+        });
+    </script>
+</body>
+</html>
