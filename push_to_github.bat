@@ -6,7 +6,7 @@ echo ====================================================
 echo.
 
 set GIT_CMD=git
-set REMOTE_URL=https://github.com/ting-glitch/ops-platform-demo.git
+set REMOTE_URL=https://github.com/ting-glitch/demo-portal-1.git
 
 :: Check if git is available in standard environment path
 where git >nul 2>nul
